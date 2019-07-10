@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>评价页面</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- element-ui.css -->
+    <link rel="stylesheet" href="../css/index.css">
+
+</head>
+
+<body>
+    <div id="app">
+        <el-row>
+            <el-button v-on:click="click(1)" type="success" style="font-size:50px;font-family:微软雅黑;height: 570px;width: 410px" disabled>满意</el-button>
+            <el-button v-on:click="click(2)" type="primary" style="font-size:50px;font-family:微软雅黑;height: 570px;width: 410px" disabled>一般</el-button>
+            <el-button v-on:click="click(3)" type="danger" style="font-size:50px;font-family:微软雅黑;height: 570px;width: 410px" disabled>不满意</el-button>
+        </el-row>
+    </div>
+</body>
+
+<script src="../js/reconnecting-websocket.min.js"></script>
+<script src="../js/vue.js"></script>
+<!-- element-ui.js -->
+<script src="../js/index.js"></script>
+<script>
+    var socket;
+    let userId;
+    let serialNum;
+    if (typeof(WebSocket) == "undefined") {
+        console.log("您的浏览器不支持WebSocket");
+    } else {
+        //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
+        let socketUrl = "ws://#(context)/im/#(winNum)";
+        socket = new ReconnectingWebSocket(socketUrl, null, {
+            debug: false,
+            reconnectInterval: 3000
+        });
+        console.log("创建websocket");
+        //打开事件
+        socket.onopen = function() {
+            console.log("websocket客户端已打开");
+        };
+        //获得消息事件
+        socket.onmessage = function(msg) {
+            if(msg.data != undefined && msg.data.indexOf("已有相同窗口") != -1){
+                alert("已有相同窗口，请重新输入正确窗口号");
+                socket.close();
+                window.history.back(-1);
+                return;
+            }
+            try{
+                let data = JSON.parse(msg.data);
+                console.log(data);
+                if (data.code == "0" && data.data != undefined && data.data.active == "startEvaluate") {
+                    userId = data.data.userId;
+                    serialNum = data.data.serialNum;
+                    app.allowClick();
+                    setTimeout(app.allDisabled,10000);
+                }
+            }catch (e) {
+                console.log(e);
+            }
+
+            //发现消息进入开始处理前端触发逻辑
+        };
+        //关闭事件
+        socket.onclose = function() {
+            //console.log("websocket已关闭,正在尝试重新连接");
+        };
+        //发生了错误事件
+        socket.onerror = function() {
+            //console.log("websocket已关闭,正在尝试重新连接");
+            //app.allowClick();
+        }
+        //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+        window.onbeforeunload = function() {
+            socket.close();
+        }
+    }
+    //fullScreen()和exitScreen()有多种实现方式，此处只使用了其中一种
+    //全屏
+    function fullScreen() {
+        var docElm = document.documentElement;
+        docElm.webkitRequestFullScreen( Element.ALLOW_KEYBOARD_INPUT );
+    }
+    var app = new Vue({
+        el: '#app',
+        data: function() {
+
+        },
+        methods: {
+            click: function(evaluation) {
+                console.log(evaluation);
+                let data = {
+                    evaluation : evaluation,
+                    userId : userId,
+                    serialNum : serialNum
+                }
+                let jsonData = JSON.stringify(data);
+                console.log(jsonData);
+                socket.send(jsonData);
+                let childrens = app.$children[0].$children;
+                for (let children of childrens) {
+                    children.disabled = true;
+                }
+            },
+            allowClick: function() {
+                let childrens = app.$children[0].$children;
+                for (let children of childrens) {
+                    children.disabled = false;
+                }
+            },
+            allDisabled:function () {
+                let childrens = app.$children[0].$children;
+                for (let children of childrens) {
+                    children.disabled = true;
+                }
+            }
+        },
+    });
+
+</script>
+
+</html>

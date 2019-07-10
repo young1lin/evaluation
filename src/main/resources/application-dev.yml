@@ -1,0 +1,38 @@
+server:
+  port: 80
+  tomcat:
+    accesslog:
+      enabled: true
+    basedir: target/tomcat
+    uri-encoding: UTF-8
+    # default 200
+    max-threads: 500
+spring:
+  http.encoding.force: true
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    username: root
+    password: root
+    #driver-class-name: org.h2.Driver
+    #schema: classpath:db/schema-h2.sql
+    #data: classpath:db/data-h2.sql
+    #url: jdbc:h2:mem:test
+  jpa:
+    show-sql: true
+    open-in-view: false
+
+mybatis:
+  mapper-locations: classpath:mapping/*Mapper.xml
+  type-aliases-package: cn.luckyray.evaluation.entity
+
+#showSql
+logging:
+  level:
+    cn:
+      luckyray:
+        evaluation:
+          mapper : debug

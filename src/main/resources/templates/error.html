@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>访问地址错误</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="../css/index.css">
+</head>
+
+<body>
+<div id="app" style="height: 500px">
+    <el-row style="height: 100%">
+        <el-input size="large" placeholder="请输入窗口号" v-model="input" clearable></el-input>
+        <el-button v-on:click="toEvaPage" type="primary" style="height: 10%;width: 100%">跳转</el-button>
+    </el-row>
+</div>
+<script src="../js/vue.js"></script>
+<!-- element-ui.js -->
+<script src="../js/index.js"></script>
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            input: ''
+        },
+        methods: {
+            toEvaPage: function() {
+                console.log("窗口号为：" + this.input);
+                let val = this.input;
+                let valRegx = /^[0-9a-zA-Z]*$/g;
+                if (val === undefined || val === '' || val.trim() === '') {
+                    return;
+                }
+                if(!valRegx.test(val)){
+                    alert("只能输入英文字母与数字");
+                    return;
+                }
+                window.location.href = "http://#(context)/d?u=" + val;
+            }
+        }
+    });
+</script>
+
+</html>
