@@ -3,9 +3,6 @@ package cn.luckyray.evaluation.websocket;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
@@ -58,12 +55,10 @@ public class EvaluationServer {
             log.error("请输入窗口号！！！！！！！！！！！！！！！！");
             return;
         }else{
-            Lock lock = new ReentrantLock();
             try {
                 if(websocketList.get(fromWinNum) == null){
                     this.winNum = fromWinNum;
                     websocketList.put(fromWinNum,this);
-                    lock.lock();
                     addOnlineCount();           //在线数加1
                     log.info("有新窗口开始监听:{},当前窗口数为{}",fromWinNum,getOnlineCount());
                 }else{
@@ -73,8 +68,6 @@ public class EvaluationServer {
                 }
             }catch (IOException e){
                 e.printStackTrace();
-            }finally {
-                lock.unlock();
             }
         }
         if(session.isOpen()){
@@ -88,14 +81,11 @@ public class EvaluationServer {
      */
     @OnClose
     public void onClose() {
-        Lock lock = new ReentrantLock();
-        lock.lock();
         if(websocketList.get(this.winNum)!=null){
             websocketList.remove(this.winNum);
             subOnlineCount();           //在线数减1
             log.info("有一连接关闭！当前在线窗口为：{}",getOnlineCount());
         }
-        lock.unlock();
     }
 
     /**
