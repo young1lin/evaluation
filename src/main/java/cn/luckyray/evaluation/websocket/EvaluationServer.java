@@ -3,6 +3,7 @@ package cn.luckyray.evaluation.websocket;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
@@ -27,23 +28,19 @@ import org.springframework.stereotype.Component;
 public class EvaluationServer {
 
     /**
-     *  静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
-     * @date 2019/7/3 9:25
+     *  static 变量被该类class对象持有，在类初始化时一起初始化。final保证对象引用不可变
     */
-    private static volatile int onlineCount = 0;
+    private static final AtomicInteger onlineCount = new AtomicInteger(0);
     /**
      * 与某个客户端的连接会话，需要通过它来给客户端发送数据
-     * @date 2019/7/3 9:26
     */
     private Session session;
     /**
      * 使用map对象，便于根据winNum来获取对应的WebSocket
-     * @date 2019/7/3 9:26
     */
     private static ConcurrentHashMap<String,EvaluationServer> websocketList = new ConcurrentHashMap<>();
     /**
      *  接收winNum
-     * @date 2019/7/3 9:27
     */
     private String winNum="";
     /**
@@ -59,8 +56,8 @@ public class EvaluationServer {
                 if(websocketList.get(fromWinNum) == null){
                     this.winNum = fromWinNum;
                     websocketList.put(fromWinNum,this);
-                    addOnlineCount();           //在线数加1
-                    log.info("有新窗口开始监听:{},当前窗口数为{}",fromWinNum,getOnlineCount());
+                    //在线数加1
+                    log.info("有新窗口开始监听:{},当前窗口数为{}",fromWinNum,onlineCount.incrementAndGet());
                 }else{
                     session.getBasicRemote().sendText("已有相同窗口，请重新输入不同窗口号");
                     CloseReason closeReason = new CloseReason(CloseReason.CloseCodes.NORMAL_CLOSURE,"相同窗口");
@@ -83,8 +80,8 @@ public class EvaluationServer {
     public void onClose() {
         if(websocketList.get(this.winNum)!=null){
             websocketList.remove(this.winNum);
-            subOnlineCount();           //在线数减1
-            log.info("有一连接关闭！当前在线窗口为：{}",getOnlineCount());
+            //在线数减1
+            log.info("有一连接关闭！当前在线窗口为：{}",onlineCount.decrementAndGet());
         }
     }
 
@@ -154,16 +151,8 @@ public class EvaluationServer {
         });
     }
 
-    private synchronized int getOnlineCount() {
-        return onlineCount;
-    }
-
-    private synchronized void addOnlineCount() {
-        onlineCount++;
-    }
-
-    private synchronized void subOnlineCount() {
-        onlineCount--;
+    public int getOnlineCount() {
+        return onlineCount.get();
     }
 
     public static synchronized ConcurrentHashMap<String,EvaluationServer> getWebSocketList(){
