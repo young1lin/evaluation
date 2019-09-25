@@ -1,5 +1,6 @@
 package cn.luckyray.evaluation.entity;
 
+import cn.luckyray.evaluation.vo.BaseEntityVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,10 +13,10 @@ import lombok.ToString;
  * @github www.github.com/young1lin
  */
 @Data
-@ToString
+@ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Active {
+public class Active<T extends BaseEntityVO>{
     private String active;
-    private Object activeData;
+    private T activeData;
 }
