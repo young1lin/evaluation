@@ -1,10 +1,13 @@
 package cn.luckyray.evaluation.api;
 
 import cn.luckyray.evaluation.constant.ResultCode;
+import cn.luckyray.evaluation.entity.Active;
 import cn.luckyray.evaluation.entity.ApiReturnObject;
+import cn.luckyray.evaluation.exception.RuleException;
 import cn.luckyray.evaluation.service.UserService;
 import cn.luckyray.evaluation.util.ApiReturnUtil;
 import cn.luckyray.evaluation.vo.CallEvaluationVO;
+import cn.luckyray.evaluation.vo.UserVO;
 import cn.luckyray.evaluation.websocket.EvaluationServer;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
@@ -55,11 +58,18 @@ public class CallEvaluationController {
         String message = JSON.toJSONString(ApiReturnUtil.success(data));
         try {
             EvaluationServer.sendInfo(message,callEvaluationVO.getWinNum());
-        } catch (IOException e) {
+        } catch (RuleException e) {
             e.printStackTrace();
-            log.error("[{}]窗口不存在，或者客户端已断开",callEvaluationVO.getWinNum());
+            log.error("[{}]窗口不存在，或者客户端已断开，detail is [{}]",callEvaluationVO.getWinNum(),e.getMessage());
             return ApiReturnUtil.failure(ResultCode.NOT_EXIST_WINDOW_NUM);
         }
+        return ApiReturnUtil.success();
+    }
+
+    @RequestMapping("/login")
+    public ApiReturnObject login(UserVO userVO){
+        Active active =new Active("login",userVO);
+        EvaluationServer.sendInfoToOCX(active,userVO.getWinNum());
         return ApiReturnUtil.success();
     }
 }

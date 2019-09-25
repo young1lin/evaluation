@@ -8,6 +8,8 @@ import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
+import cn.luckyray.evaluation.entity.Active;
+import cn.luckyray.evaluation.exception.RuleException;
 import cn.luckyray.evaluation.util.ApiReturnUtil;
 import cn.luckyray.evaluation.util.DateUtil;
 import cn.luckyray.evaluation.util.SpringBeanUtil;
@@ -16,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * 评价器服务端
@@ -130,10 +133,10 @@ public class EvaluationServer {
      * @date 2019/7/3 9:58
      * @return void
     */
-    public static void sendInfo(String message,@PathParam("winNum") String winNum) throws IOException {
+    public static void sendInfo(String message,@PathParam("winNum") String winNum)throws RuleException {
         if(webSocketList.get(winNum) == null){
             log.error("没有窗口号！！！！！！！！！");
-            return;
+            throw new RuleException("没有窗口号");
         }
         webSocketList.forEach((k,v)->{
             try {
@@ -147,6 +150,32 @@ public class EvaluationServer {
             } catch (IOException e) {
                 e.printStackTrace();
                 log.info("找不到指定的 WebSocket 客户端：{}",winNum);
+            }
+        });
+    }
+
+    /**
+     * 向OCX发送动作
+     * @param active
+     * @param winNum
+     * @author 杨逸林
+     * @date 2019-09-25 21:03
+     * @return void
+    */
+    public static void sendInfoToOCX(Active active, @PathParam("winNum")String winNum){
+        String activeJson = JSON.toJSONString(active);
+        if(webSocketList.get(winNum) == null){
+            return;
+        }
+        webSocketList.forEach((k,v)->{
+            try {
+                if(k.equals(winNum)){
+                    log.info("推送消息到窗口：{}，推送内容：{}",winNum,active);
+                    v.sendMessage(activeJson);
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+                log.info("系统异常{}",e);
             }
         });
     }
