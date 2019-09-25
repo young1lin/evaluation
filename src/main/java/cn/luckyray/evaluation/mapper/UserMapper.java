@@ -1,5 +1,8 @@
 package cn.luckyray.evaluation.mapper;
 
+import cn.luckyray.evaluation.entity.User;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -10,7 +13,7 @@ import org.springframework.stereotype.Repository;
  * @date 2019-07-08 8:46
  **/
 @Repository
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<User> {
     /**
      * 统计用户数量
      * @param id

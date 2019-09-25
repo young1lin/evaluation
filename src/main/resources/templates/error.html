@@ -21,14 +21,13 @@
 <script src="../js/index.js"></script>
 </body>
 <script>
-    var app = new Vue({
+    const app = new Vue({
         el: '#app',
         data: {
             input: ''
         },
         methods: {
             toEvaPage: function() {
-                console.log("窗口号为：" + this.input);
                 let val = this.input;
                 let valRegx = /^[0-9a-zA-Z]*$/g;
                 if (val === undefined || val === '' || val.trim() === '') {
@@ -38,7 +37,8 @@
                     alert("只能输入英文字母与数字");
                     return;
                 }
-                window.location.href = "http://#(context)/d?u=" + val;
+                let url = document.URL;
+                window.location.href = url+"d/" + val;
             }
         }
     });

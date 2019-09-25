@@ -14,9 +14,9 @@ import lombok.ToString;
  **/
 
 @Data
-@ToString
+@ToString(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
-    private Integer id;
+public class User extends BaseEntity{
+    private String username;
 }

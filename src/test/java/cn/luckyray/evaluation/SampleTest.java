@@ -1,11 +1,11 @@
 package cn.luckyray.evaluation;
 
-import cn.luckyray.evaluation.entity.User;
-import org.junit.Assert;
+import cn.luckyray.evaluation.entity.AccessRecord;
+import cn.luckyray.evaluation.mapper.AccessRecordMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -19,8 +19,17 @@ import java.util.List;
  **/
 
 @RunWith(SpringRunner.class)
-@WebMvcTest
+@SpringBootTest
 public class SampleTest {
 
+    @Autowired
+    private AccessRecordMapper accessRecordMapper;
+
+    @Test
+    public void testSelect(){
+        System.out.println("---------start select--------------");
+        List<AccessRecord> list = accessRecordMapper.selectList(null);
+        list.forEach(System.out::println);
+    }
 
 }

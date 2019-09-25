@@ -21,12 +21,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean userIsExist(int id){
-        boolean exist = false;
         int userCount = userMapper.countUserById(id);
-        if(userCount > 0){
-            exist = true;
-        }
-        return exist;
+        return userCount > 0 ? true:false;
     }
 
 }

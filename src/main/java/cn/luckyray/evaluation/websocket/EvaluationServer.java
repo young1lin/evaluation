@@ -38,7 +38,7 @@ public class EvaluationServer {
     /**
      * 使用map对象，便于根据winNum来获取对应的WebSocket
     */
-    private static ConcurrentHashMap<String,EvaluationServer> websocketList = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<String,EvaluationServer> webSocketList = new ConcurrentHashMap<>();
     /**
      *  接收winNum
     */
@@ -53,9 +53,9 @@ public class EvaluationServer {
             return;
         }else{
             try {
-                if(websocketList.get(fromWinNum) == null){
+                if(webSocketList.get(fromWinNum) == null){
                     this.winNum = fromWinNum;
-                    websocketList.put(fromWinNum,this);
+                    webSocketList.put(fromWinNum,this);
                     //在线数加1
                     log.info("有新窗口开始监听:{},当前窗口数为{}",fromWinNum,onlineCount.incrementAndGet());
                 }else{
@@ -78,8 +78,8 @@ public class EvaluationServer {
      */
     @OnClose
     public void onClose() {
-        if(websocketList.get(this.winNum)!=null){
-            websocketList.remove(this.winNum);
+        if(webSocketList.get(this.winNum)!=null){
+            webSocketList.remove(this.winNum);
             //在线数减1
             log.info("有一连接关闭！当前在线窗口为：{}",onlineCount.decrementAndGet());
         }
@@ -131,11 +131,11 @@ public class EvaluationServer {
      * @return void
     */
     public static void sendInfo(String message,@PathParam("winNum") String winNum) throws IOException {
-        if(websocketList.get(winNum) == null){
+        if(webSocketList.get(winNum) == null){
             log.error("没有窗口号！！！！！！！！！");
             return;
         }
-        websocketList.forEach((k,v)->{
+        webSocketList.forEach((k,v)->{
             try {
                 //这里可以设定只推送给这个winNum的，为null则全部推送
                 if(winNum==null) {
@@ -156,7 +156,7 @@ public class EvaluationServer {
     }
 
     public static synchronized ConcurrentHashMap<String,EvaluationServer> getWebSocketList(){
-        return websocketList;
+        return webSocketList;
     }
 }
 

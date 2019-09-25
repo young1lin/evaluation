@@ -12,7 +12,7 @@ public enum  ResultCode {
     /* 成功状态码 */
     SUCCESS(0, "success"),
     SYSTEM_EXCEPTION(500,"系统异常"),
-    FAILURE(-1,"咋的，失败了"),
+    FAILURE(-1,""),
     NOT_EXIST_WINDOW_NUM(-2,"不存在该窗口"),
     USER_ID_IS_EMPTY(-3,"用户名为空"),
     WINDOW_NUM_IS_EMPTY(-4,"窗口名为空"),
@@ -56,6 +56,10 @@ public enum  ResultCode {
             return null;
         }
 
+        public ResultCode setMessage(String message) {
+            this.message = message;
+            return this;
+        }
         @Override
         public String toString() {
             return this.name();

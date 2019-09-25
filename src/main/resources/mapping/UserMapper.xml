@@ -3,7 +3,7 @@
 <mapper namespace="cn.luckyray.evaluation.mapper.UserMapper">
 
     <resultMap id="user" type="cn.luckyray.evaluation.entity.User">
-        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="id" property="id" />
     </resultMap>
 
     <select id="countUserById" resultType="int">
