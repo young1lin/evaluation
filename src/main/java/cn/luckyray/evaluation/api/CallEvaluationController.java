@@ -34,9 +34,6 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 public class CallEvaluationController {
 
-    @Autowired
-    private UserService userService;
-
     /**
      * 开始评价接口
      * @author 杨逸林
@@ -46,9 +43,6 @@ public class CallEvaluationController {
     @RequestMapping("/startEvaluate")
     public ApiReturnObject startEvaluate(@Valid CallEvaluationVO callEvaluationVO){
         Integer userId = callEvaluationVO.getUserId();
-        /*if(!userService.userIsExist(userId)){
-            return ApiReturnUtil.failure(ResultCode.USER_IS_NOT_EXIST);
-        }*/
         ConcurrentHashMap<String, EvaluationServer> map = EvaluationServer.getWebSocketList();
         if(map.get(callEvaluationVO.getWinNum()) == null){ return ApiReturnUtil.failure(ResultCode.NOT_EXIST_WINDOW_NUM); }
         Map<String,Object> data = new HashMap(4);
@@ -66,9 +60,18 @@ public class CallEvaluationController {
         return ApiReturnUtil.success();
     }
 
+
+    /**
+     * 员工登录接口
+     * @param userVO
+     * @param winNum
+     * @author 杨逸林
+     * @date 2019-09-25 21:43
+     * @return cn.luckyray.evaluation.entity.ApiReturnObject
+    */
     @RequestMapping("/login")
     public ApiReturnObject login(UserVO userVO,String winNum){
-        Active active =new Active("login",userVO);
+        Active active = new Active("login",userVO);
         EvaluationServer.sendInfoToOCX(active,winNum);
         return ApiReturnUtil.success();
     }

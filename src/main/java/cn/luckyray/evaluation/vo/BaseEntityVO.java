@@ -8,15 +8,14 @@ import lombok.ToString;
 /**
  * @author young1Lin
  * @description
- * @date 2019/9/25 20:52
+ * @date 2019/9/25 21:53
  * @github www.github.com/young1lin
  */
 @Data
-@ToString(callSuper = true)
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserVO extends BaseEntityVO {
-    private String name;
-    private String userNo;
-    private String winType;
+public class BaseEntityVO {
+    String ip;
+    String winNum;
 }
