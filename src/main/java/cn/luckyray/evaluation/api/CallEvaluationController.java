@@ -67,9 +67,9 @@ public class CallEvaluationController {
     }
 
     @RequestMapping("/login")
-    public ApiReturnObject login(UserVO userVO){
+    public ApiReturnObject login(UserVO userVO,String winNum){
         Active active =new Active("login",userVO);
-        EvaluationServer.sendInfoToOCX(active,userVO.getWinNum());
+        EvaluationServer.sendInfoToOCX(active,winNum);
         return ApiReturnUtil.success();
     }
 }
