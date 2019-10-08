@@ -59,33 +59,4 @@ public class CallEvaluationController {
         }
         return ApiReturnUtil.success();
     }
-
-
-    /**
-     * 员工登录接口
-     * @param userVO
-     * @author 杨逸林
-     * @date 2019-09-25 21:43
-     * @return cn.luckyray.evaluation.entity.ApiReturnObject
-    */
-    @RequestMapping("/signIn")
-    public ApiReturnObject signIn(UserVO userVO){
-        Active active = new Active("signIn",userVO);
-        EvaluationServer.sendInfoToOCX(active,userVO.getWinNum());
-        return ApiReturnUtil.success();
-    }
-
-    /**
-     * 员工登出
-     * @param: userVo
-     * @author 杨逸林
-     * @date 2019-09-25 22:03
-     * @return cn.luckyray.evaluation.entity.ApiReturnObject
-    */
-    @RequestMapping("/signOut")
-    public ApiReturnObject signOut(UserVO userVo){
-        Active active = new Active("signOut",userVo);
-        EvaluationServer.sendInfoToOCX(active,userVo.getWinNum());
-        return ApiReturnUtil.success();
-    }
 }

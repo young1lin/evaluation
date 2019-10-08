@@ -15,8 +15,12 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserVO extends BaseEntityVO {
+public class UserVO {
+    private String ip;
+    private String pageNum;
     private String name;
+    private String winNum;
     private String userNo;
     private String winType;
+    private String lsh;
 }

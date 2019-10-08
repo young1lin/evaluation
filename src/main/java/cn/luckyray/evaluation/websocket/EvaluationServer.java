@@ -84,7 +84,7 @@ public class EvaluationServer {
         if(webSocketList.get(this.winNum)!=null){
             webSocketList.remove(this.winNum);
             //在线数减1
-            log.info("有一连接关闭！当前在线窗口为：{}",onlineCount.decrementAndGet());
+            log.info("有一连接关闭！当前在线窗口为：[{}]",onlineCount.decrementAndGet());
         }
     }
 
@@ -94,16 +94,20 @@ public class EvaluationServer {
      * @param message 客户端发送过来的消息*/
     @OnMessage
     public void onMessage(String message, Session session) {
-        log.info("收到来自窗口{}的信息:{},会话ID:",winNum,message,session.getId());
-        if(StringUtils.isNotBlank(message)){
-            //解析发送的报文
-            Map<String,Object> map = JSON.parseObject(message, Map.class);
-            Integer pjjg = (Integer) map.get("evaluation");
-            String lsh = (String) map.get("serialNum");
-            String requestTime = DateUtil.getCurrentDate();
-            JdbcTemplate jdbcTemplate = (JdbcTemplate) SpringBeanUtil.getBean("jdbcTemplate");
-            //String sql = "insert into xxxx";
-            //jdbcTemplate.execute(sql);
+        log.info("收到来自窗口[{}]的信息:[{}],会话ID:",winNum,message,session.getId());
+        try{
+            if(StringUtils.isNotBlank(message)){
+                //解析发送的报文
+                Map<String,Object> map = JSON.parseObject(message, Map.class);
+                String pjjg = (String) map.get("level");
+                String lsh = (String) map.get("lsh");
+                String requestTime = DateUtil.getCurrentDate();
+                JdbcTemplate jdbcTemplate = (JdbcTemplate) SpringBeanUtil.getBean("jdbcTemplate");
+                String sql = "insert into au_call_code_szzp_123 (lsh,pjjg,request_time)values(?,?,?)";
+                jdbcTemplate.update(sql,lsh,pjjg,requestTime);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -144,12 +148,12 @@ public class EvaluationServer {
                 if(winNum==null) {
                     v.sendMessage(message);
                 }else if(k.equals(winNum)){
-                    log.info("推送消息到窗口:{}，推送内容: {}",winNum,message);
+                    log.info("推送消息到窗口:[{}]，推送内容: [{}]",winNum,message);
                     v.sendMessage(message);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                log.info("找不到指定的 WebSocket 客户端：{}",winNum);
+                log.info("找不到指定的 WebSocket 客户端：[{}]",winNum);
             }
         });
     }
@@ -170,12 +174,12 @@ public class EvaluationServer {
         webSocketList.forEach((k,v)->{
             try {
                 if(k.equals(winNum)){
-                    log.info("推送消息到窗口：{}，推送内容：{}",winNum,active);
+                    log.info("推送消息到窗口：[{}]，推送内容：[{}]",winNum,active);
                     v.sendMessage(activeJson);
                 }
             }catch (IOException e){
                 e.printStackTrace();
-                log.info("系统异常{}",e);
+                log.info("系统异常[{}]",e);
             }
         });
     }
