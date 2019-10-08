@@ -43,7 +43,7 @@ public class EvaluationServer {
     */
     private static ConcurrentHashMap<String,EvaluationServer> webSocketList = new ConcurrentHashMap<>();
     /**
-     *  接收winNum
+     *  接收winNum∑
     */
     private String winNum="";
     /**
@@ -54,21 +54,20 @@ public class EvaluationServer {
         if(StringUtils.isEmpty(fromWinNum)){
             log.error("请输入窗口号！！！！！！！！！！！！！！！！");
             return;
-        }else{
-            try {
-                if(webSocketList.get(fromWinNum) == null){
-                    this.winNum = fromWinNum;
-                    webSocketList.put(fromWinNum,this);
-                    //在线数加1
-                    log.info("有新窗口开始监听:{},当前窗口数为{}",fromWinNum,onlineCount.incrementAndGet());
-                }else{
-                    session.getBasicRemote().sendText("已有相同窗口，请重新输入不同窗口号");
-                    CloseReason closeReason = new CloseReason(CloseReason.CloseCodes.NORMAL_CLOSURE,"相同窗口");
-                    session.close(closeReason);
-                }
-            }catch (IOException e){
-                e.printStackTrace();
+        }
+        try {
+            if(webSocketList.get(fromWinNum) == null){
+                this.winNum = fromWinNum;
+                webSocketList.put(fromWinNum,this);
+                //在线数加1
+                log.info("有新窗口开始监听:{},当前窗口数为{}",fromWinNum,onlineCount.incrementAndGet());
+            }else{
+                session.getBasicRemote().sendText("已有相同窗口，请重新输入不同窗口号");
+                CloseReason closeReason = new CloseReason(CloseReason.CloseCodes.NORMAL_CLOSURE,"相同窗口");
+                session.close(closeReason);
             }
+        }catch (IOException e){
+            e.printStackTrace();
         }
         if(session.isOpen()){
             String jo = JSON.toJSONString(ApiReturnUtil.success());

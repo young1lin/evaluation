@@ -37,7 +37,7 @@ public class ApiFilter implements Filter {
         long startTime = System.currentTimeMillis();
         filterChain.doFilter(servletRequest,servletResponse);
         long endTime = System.currentTimeMillis();
-        log.info("--------------costTime : {} ms",endTime-startTime);
+        log.info("--------------costTime : [{}] ms",endTime-startTime);
     }
 
     @Override
