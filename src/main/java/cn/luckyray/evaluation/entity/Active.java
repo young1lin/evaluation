@@ -1,10 +1,11 @@
 package cn.luckyray.evaluation.entity;
 
-import cn.luckyray.evaluation.vo.BaseEntityVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.util.Map;
 
 /**
  * @author young1Lin
@@ -16,7 +17,7 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Active<T extends BaseEntityVO>{
+public class Active{
     private String active;
-    private T activeData;
+    private Map activeData;
 }

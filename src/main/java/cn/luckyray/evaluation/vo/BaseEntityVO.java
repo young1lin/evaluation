@@ -17,5 +17,5 @@ import lombok.ToString;
 @NoArgsConstructor
 public class BaseEntityVO {
     String ip;
-    String winNum;
+    String pageNum;
 }

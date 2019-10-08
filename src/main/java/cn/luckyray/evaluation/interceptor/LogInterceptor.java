@@ -102,7 +102,7 @@ public class LogInterceptor implements HandlerInterceptor {
 
     /**
      * 将请求参数转换为String类型
-     * @param: map
+     * @param map
      * @author 杨逸林
      * @date 2019-08-15 23:44
      * @return java.lang.String
