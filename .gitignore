@@ -21,3 +21,9 @@ target/
 
 ### VS Code ###
 .vscode/
+
+### log File ###
+*.log
+
+### test ###
+src/test/**

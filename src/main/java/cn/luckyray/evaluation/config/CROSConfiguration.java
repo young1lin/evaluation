@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * @github www.github.com/young1lin
  */
 @Configuration
-public class CROSConfirguration extends WebMvcConfigurerAdapter {
+public class CROSConfiguration extends WebMvcConfigurerAdapter {
     /**
      * 处理AJAX请求跨域的问题
      * @author Levin
