@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 public interface AccessRecordMapper extends BaseMapper<AccessRecord> {
     /**
      * 根据ip统计是否存在
-     * @param: ip
+     * @param ip
      * @date 2019-08-18 18:07
      * @return int
     */

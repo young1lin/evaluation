@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * 接口访问日志打印并输入数据库
- * @author: young1Lin
+ * @author young1Lin
  * @github www.github.com/young1lin
  */
 @Slf4j

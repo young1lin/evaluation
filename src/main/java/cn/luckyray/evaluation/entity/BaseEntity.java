@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 /**
- * @author: young1Lin
+ * @author young1Lin
  * @github www.github.com/young1lin
  */
 @MappedSuperclass

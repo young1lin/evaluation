@@ -1,5 +1,6 @@
 package cn.luckyray.evaluation.util;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -19,6 +20,12 @@ public class DateUtil {
      * @return java.lang.String
     */
     public static String getCurrentDate(){
+        LocalDate now = LocalDate.now();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return now.format(dtf);
+    }
+
+    public static String getCurrentDateTime(){
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return now.format(dtf);

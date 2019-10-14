@@ -1,15 +1,12 @@
 package cn.luckyray.evaluation.config;
 
-import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  * @author young1Lin
- * @description
  * @date 2019/9/29 13:16
- * @github www.github.com/young1lin
  */
 @Configuration
 public class CROSConfiguration extends WebMvcConfigurerAdapter {

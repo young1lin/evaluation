@@ -38,24 +38,6 @@ public enum  ResultCode {
             return this.message;
         }
 
-        public static String getMessage(String name) {
-            for (ResultCode item : ResultCode.values()) {
-                if (item.name().equals(name)) {
-                    return item.message;
-                }
-            }
-            return name;
-        }
-
-        public static Integer getCode(String name) {
-            for (ResultCode item : ResultCode.values()) {
-                if (item.name().equals(name)) {
-                    return item.code;
-                }
-            }
-            return null;
-        }
-
         public ResultCode setMessage(String message) {
             this.message = message;
             return this;

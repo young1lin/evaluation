@@ -28,7 +28,7 @@ public class LogInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         startTimeThreadLocal.set(System.currentTimeMillis());
         if(handler instanceof HandlerMethod){
-            String date = DateUtil.getCurrentDate();
+            String date = DateUtil.getCurrentDateTime();
             HandlerMethod method = (HandlerMethod)handler;
             StringBuilder  sb = new StringBuilder(1000);
             sb.append("-----------------------")

@@ -25,7 +25,7 @@ public class AccessRecordServiceImpl implements AccessRecordService {
     @Override
     public boolean selectCountAccessIp(String ip) {
         int count = accessRecordMapper.selectCountAccessIp(IpUtil.ip2Long(ip));
-        return count !=0 ? true:false;
+        return count != 0;
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -33,7 +33,7 @@ public class AccessRecordServiceImpl implements AccessRecordService {
     public void insertAccessRecord(String ip){
         AccessRecord accessRecord = new AccessRecord();
         Long remoteAddress = IpUtil.ip2Long(ip);
-        String currentDate = DateUtil.getCurrentDate();
+        String currentDate = DateUtil.getCurrentDateTime();
         accessRecord.setAccessIpAddress(remoteAddress);
         accessRecord.setCreator(ip);
         accessRecord.setCreator(ip);

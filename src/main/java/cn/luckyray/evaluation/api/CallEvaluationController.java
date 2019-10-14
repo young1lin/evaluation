@@ -1,22 +1,17 @@
 package cn.luckyray.evaluation.api;
 
 import cn.luckyray.evaluation.constant.ResultCode;
-import cn.luckyray.evaluation.entity.Active;
 import cn.luckyray.evaluation.entity.ApiReturnObject;
 import cn.luckyray.evaluation.exception.RuleException;
-import cn.luckyray.evaluation.service.UserService;
 import cn.luckyray.evaluation.util.ApiReturnUtil;
 import cn.luckyray.evaluation.vo.CallEvaluationVO;
-import cn.luckyray.evaluation.vo.UserVO;
 import cn.luckyray.evaluation.websocket.EvaluationServer;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

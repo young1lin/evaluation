@@ -19,7 +19,7 @@ public class WinFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         String remoteURL = servletRequest.getRemoteAddr();
-        log.info("RemoteURL : {}",remoteURL);
+        log.info("RemoteURL : [{}]",remoteURL);
         filterChain.doFilter(servletRequest,servletResponse);
     }
 

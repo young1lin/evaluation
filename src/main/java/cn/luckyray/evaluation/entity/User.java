@@ -1,9 +1,6 @@
 package cn.luckyray.evaluation.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 /**
  * TODO
@@ -13,6 +10,7 @@ import lombok.ToString;
  * @date 2019/7/4 15:41
  **/
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @ToString(callSuper = true)
 @AllArgsConstructor

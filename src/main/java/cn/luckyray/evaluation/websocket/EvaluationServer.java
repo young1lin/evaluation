@@ -18,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * 评价器服务端
@@ -43,7 +42,7 @@ public class EvaluationServer {
     */
     private static ConcurrentHashMap<String,EvaluationServer> webSocketList = new ConcurrentHashMap<>();
     /**
-     *  接收winNum∑
+     *  接收winNum
     */
     private String winNum="";
     /**
@@ -93,14 +92,17 @@ public class EvaluationServer {
      * @param message 客户端发送过来的消息*/
     @OnMessage
     public void onMessage(String message, Session session) {
-        log.info("收到来自窗口[{}]的信息:[{}],会话ID:",winNum,message,session.getId());
+        log.info("收到来自窗口[{}]的信息:[{}],会话ID:[{}]",winNum,message,session.getId());
         try{
             if(StringUtils.isNotBlank(message)){
-                //解析发送的报文
-                Map<String,Object> map = JSON.parseObject(message, Map.class);
-                String pjjg = (String) map.get("level");
+                //解析发送的报文p《》.
+                Map map = JSON.parseObject(message, Map.class);
+                Integer pjjg = (Integer) map.get("level");
+                if(pjjg > 4){
+                    pjjg = 4;
+                }
                 String lsh = (String) map.get("lsh");
-                String requestTime = DateUtil.getCurrentDate();
+                String requestTime = DateUtil.getCurrentDateTime();
                 JdbcTemplate jdbcTemplate = (JdbcTemplate) SpringBeanUtil.getBean("jdbcTemplate");
                 String sql = "insert into au_call_code_szzp_123 (lsh,pjjg,request_time)values(?,?,?)";
                 jdbcTemplate.update(sql,lsh,pjjg,requestTime);
@@ -178,12 +180,12 @@ public class EvaluationServer {
                 }
             }catch (IOException e){
                 e.printStackTrace();
-                log.info("系统异常[{}]",e);
+                log.info("系统异常[{}]",e.getMessage());
             }
         });
     }
 
-    public int getOnlineCount() {
+    public static int getOnlineCount() {
         return onlineCount.get();
     }
 

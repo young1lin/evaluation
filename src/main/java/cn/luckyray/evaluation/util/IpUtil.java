@@ -2,7 +2,6 @@ package cn.luckyray.evaluation.util;
 
 /**
  * @author: young1Lin
- * @github www.github.com/young1lin
  */
 public class IpUtil {
     /**
@@ -13,8 +12,8 @@ public class IpUtil {
      */
     public static long ip2Long(String ipStr) {
         String[] ip = ipStr.split("\\.");
-        return (Long.valueOf(ip[0]) << 24) + (Long.valueOf(ip[1]) << 16)
-                + (Long.valueOf(ip[2]) << 8) + Long.valueOf(ip[3]);
+        return (Long.parseLong(ip[0]) << 24) + (Long.parseLong(ip[1]) << 16)
+                + (Long.parseLong(ip[2]) << 8) + Long.parseLong(ip[3]);
     }
 
     /**
@@ -30,10 +29,5 @@ public class IpUtil {
         ip.append((ipLong >>> 8) & 0xFF).append(".");
         ip.append(ipLong & 0xFF);
         return ip.toString();
-    }
-
-    public static void main(String[] args) {
-        Long i = ip2Long("192.168.99.1");
-        System.out.println(i);
     }
 }
