@@ -97,7 +97,8 @@ public class EvaluationServer {
             if(StringUtils.isNotBlank(message)){
                 //解析发送的报文p《》.
                 Map map = JSON.parseObject(message, Map.class);
-                Integer pjjg = (Integer) map.get("level");
+                String level = (String) map.get("level");
+                Integer pjjg = Integer.parseInt(level);
                 if(pjjg > 4){
                     pjjg = 4;
                 }
