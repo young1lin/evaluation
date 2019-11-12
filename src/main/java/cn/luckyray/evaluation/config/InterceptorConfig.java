@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * 添加拦截器
- * @author: young1Lin
+ * @author young1Lin
  * @GitHub www.github.com/young1lin
  */
 @Configuration
@@ -25,7 +25,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        List<String>  excludePathPatterns = new ArrayList<>(2);
+        List<String> excludePathPatterns = new ArrayList<>(2);
         excludePathPatterns.add("/js/*.js");
         excludePathPatterns.add("/css/*.css");
         registry.addInterceptor(new LogInterceptor())

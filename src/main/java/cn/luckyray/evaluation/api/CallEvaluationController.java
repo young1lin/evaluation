@@ -7,7 +7,9 @@ import cn.luckyray.evaluation.util.ApiReturnUtil;
 import cn.luckyray.evaluation.vo.CallEvaluationVO;
 import cn.luckyray.evaluation.websocket.EvaluationServer;
 import com.alibaba.fastjson.JSON;
+import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,12 +37,16 @@ public class CallEvaluationController {
      * @date 2019/7/4 13:50
      * @return cn.luckyray.evaluation.entity.ApiReturnObject
     */
-    @RequestMapping("/startEvaluate")
+    @ApiOperation(value = "对指定webSocket客户端发起评价")
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功",response=ApiReturnObject.class),
+    })
+    @GetMapping("/startEvaluate")
     public ApiReturnObject startEvaluate(@Valid CallEvaluationVO callEvaluationVO){
         Integer userId = callEvaluationVO.getUserId();
         ConcurrentHashMap<String, EvaluationServer> map = EvaluationServer.getWebSocketList();
         if(map.get(callEvaluationVO.getWinNum()) == null){ return ApiReturnUtil.failure(ResultCode.NOT_EXIST_WINDOW_NUM); }
-        Map<String,Object> data = new HashMap(4);
+        Map<String,Object> data = new HashMap<>(4);
         data.put("active","startEvaluate");
         data.put("userId",callEvaluationVO.getUserId());
         data.put("serialNum",callEvaluationVO.getSerialNum());
@@ -49,7 +55,10 @@ public class CallEvaluationController {
             EvaluationServer.sendInfo(message,callEvaluationVO.getWinNum());
         } catch (RuleException e) {
             e.printStackTrace();
-            log.error("[{}]窗口不存在，或者客户端已断开，detail is [{}]",callEvaluationVO.getWinNum(),e.getMessage());
+
+            if(log.isDebugEnabled()){
+                log.debug("[{}]窗口不存在，或者客户端已断开，detail is [{}]",callEvaluationVO.getWinNum(),e.getMessage());
+            }
             return ApiReturnUtil.failure(ResultCode.NOT_EXIST_WINDOW_NUM);
         }
         return ApiReturnUtil.success();

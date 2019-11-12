@@ -21,7 +21,7 @@ import java.util.List;
 public class GlobalExceptionHandler {
     /**
      * 表单验证时异常返回信息
-     * @param: bindException
+     * @param bindException
      * @author 杨逸林
      * @date 2019-07-29 22:27
      * @return cn.luckyray.evaluation.entity.ApiReturnObject
@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
 
     /**
      * 全局异常捕获
-     * @param: ex
+     * @param ex
      * @author 杨逸林
      * @date 2019-07-29 22:29
      * @return cn.luckyray.evaluation.entity.ApiReturnObject

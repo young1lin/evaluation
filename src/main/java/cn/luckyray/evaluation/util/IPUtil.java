@@ -1,12 +1,11 @@
 package cn.luckyray.evaluation.util;
 
 /**
- * @author: young1Lin
+ * @author young1Lin
  */
-public class IpUtil {
+public class IPUtil {
     /**
      * 把字符串IP转换成long
-     *
      * @param ipStr 字符串IP
      * @return IP对应的long值
      */
@@ -18,7 +17,6 @@ public class IpUtil {
 
     /**
      * 把IP的long值转换成字符串
-     *
      * @param ipLong IP的long值
      * @return long值对应的字符串
      */

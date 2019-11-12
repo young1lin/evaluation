@@ -8,7 +8,7 @@ import java.io.IOException;
 
 /**
  * @author young1Lin
- * @description 窗口过滤器,用于拦截指定ip访问
+ * 窗口过滤器,用于拦截指定ip访问
  * @date 2019/8/18 14:35
  * @github www.github.com/young1lin
  */

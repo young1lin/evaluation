@@ -1,5 +1,6 @@
 package cn.luckyray.evaluation.vo;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ import java.io.Serializable;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@ApiModel
 public class CallEvaluationVO implements Serializable {
     @NotBlank(message = "窗口号不能为空")
     private String winNum;

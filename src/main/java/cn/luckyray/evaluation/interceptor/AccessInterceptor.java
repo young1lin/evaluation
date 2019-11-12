@@ -2,6 +2,7 @@ package cn.luckyray.evaluation.interceptor;
 
 import cn.luckyray.evaluation.annotation.LogAnnotation;
 import cn.luckyray.evaluation.service.AccessRecordService;
+import cn.luckyray.evaluation.util.IPUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,8 +28,7 @@ public class AccessInterceptor implements HandlerInterceptor {
         String accessIp = request.getRemoteAddr();
         String remoteHost = request.getRemoteHost();
         System.out.println(remoteHost);
-       //                                                                                                                                                                               z                               z                       z                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            accessRecordService.insertAccessRecord(accessIp);
-        log.info("访问地址为{}",accessIp);
+        log.info("访问地址为[{}]",accessIp);
         return true;
     }
 

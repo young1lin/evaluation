@@ -21,20 +21,17 @@ server:
     application-display-name: evaluation
 
 spring:
-  http.encoding.force: true
   http:
     encoding:
       charset: UTF-8
       enabled: true
+      force: true
   datasource:
     url: jdbc:mysql://192.168.1.6:3306/yczhbsdt?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
     username: root
     password: root
     sql-script-encoding: UTF-8
 
-  jpa:
-    show-sql: true
-    open-in-view: false
 #showSql
 logging:
   level:
@@ -48,3 +45,7 @@ mybatis-plus:
     map-underscore-to-camel-case: true
   mapper-locations:  classpath:/mapping/*.xml
   type-aliases-package: cn.luckyray.evaluation.entity
+
+  #关闭swagger2
+swagger2:
+  enable: false

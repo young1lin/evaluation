@@ -95,10 +95,10 @@ public class EvaluationServer {
         log.info("收到来自窗口[{}]的信息:[{}],会话ID:[{}]",winNum,message,session.getId());
         try{
             if(StringUtils.isNotBlank(message)){
-                //解析发送的报文p《》.
+                //解析发送的报文p
                 Map map = JSON.parseObject(message, Map.class);
                 String level = (String) map.get("level");
-                Integer pjjg = Integer.parseInt(level);
+                int pjjg = Integer.parseInt(level);
                 if(pjjg > 4){
                     pjjg = 4;
                 }
@@ -127,13 +127,13 @@ public class EvaluationServer {
      * @return void
     */
     private void sendMessage(String message) throws IOException {
-        this.session.getBasicRemote().sendText(message);
+        session.getBasicRemote().sendText(message);
     }
 
 
     /**
      * 发送给指定 浏览器
-     * @ param message
+     * @param message
      * @param winNum
      * @author 杨逸林
      * @date 2019/7/3 9:58
@@ -146,10 +146,8 @@ public class EvaluationServer {
         }
         webSocketList.forEach((k,v)->{
             try {
-                //这里可以设定只推送给这个winNum的，为null则全部推送
-                if(winNum==null) {
-                    v.sendMessage(message);
-                }else if(k.equals(winNum)){
+                //这里可以设定只推送给这个winNum的
+                if(k.equals(winNum)){
                     log.info("推送消息到窗口:[{}]，推送内容: [{}]",winNum,message);
                     v.sendMessage(message);
                 }

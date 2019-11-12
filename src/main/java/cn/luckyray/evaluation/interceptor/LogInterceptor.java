@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 /**
- * @author: young1Lin
+ * @author young1Lin
  * @GitHub www.github.com/young1lin
  */
 @Slf4j
@@ -30,19 +30,23 @@ public class LogInterceptor implements HandlerInterceptor {
         if(handler instanceof HandlerMethod){
             String date = DateUtil.getCurrentDateTime();
             HandlerMethod method = (HandlerMethod)handler;
-            StringBuilder  sb = new StringBuilder(1000);
-            sb.append("-----------------------")
+            /*StringBuilder  sb = new StringBuilder(1000);
+            sb.append("<===========================")
                     .append(date)
-                    .append("-------------------------------------\n")
-                    .append("Controller: ")
-                    .append(method.getBean().getClass().getName()).append("\n")
-                    .append("Method    : ")
-                    .append(method.getMethod().getName()).append("\n")
-                    .append("Params    : ")
-                    .append(getParamString(request.getParameterMap())).append("\n")
-                    .append("URI       : ")
-                    .append(request.getRequestURI());
-            System.out.println(sb.toString());
+                    .append("=============================>")
+                    .append("\nController:")
+                    .append(method.getBean().getClass().getName())
+                    .append("\nMethod    : ")
+                    .append(method.getMethod().getName())
+                    .append("\nParams    : ")
+                    .append(getParamString(request.getParameterMap()))
+                    .append("\nURI       : ")
+                    .append(request.getRequestURI());*/
+            log.info("<====================="+date+"=====================>");
+            log.info("Controller: "+method.getBean().getClass().getName());
+            log.info("Method    : "+method.getMethod().getName());
+            log.info("Params    : "+getParamString(request.getParameterMap()));
+            log.info("URI       : "+request.getRequestURI());
         }
         return true;
     }
@@ -58,11 +62,11 @@ public class LogInterceptor implements HandlerInterceptor {
         Long costTime = endTime-startTime;
         if(handler instanceof HandlerMethod){
             StringBuilder sb = new StringBuilder(1000);
-            sb.append("----------------------------")
+            sb.append("<===========================")
                     .append(costTime)
                     .append("ms")
-                    .append("-------------------------------------");
-            System.out.println(sb.toString());
+                    .append("=============================>");
+            log.info(sb.toString());
         }
 
     }
@@ -86,7 +90,7 @@ public class LogInterceptor implements HandlerInterceptor {
     }
     /**
      * 将栈异常信息打印出来
-     * @param: e
+     * @param e
      * @author 杨逸林
      * @date 2019-08-15 23:44
      * @return java.lang.String

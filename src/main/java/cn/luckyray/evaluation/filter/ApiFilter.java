@@ -1,8 +1,6 @@
 package cn.luckyray.evaluation.filter;
 
-import cn.luckyray.evaluation.service.AccessRecordService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 
 import javax.servlet.*;
@@ -10,7 +8,7 @@ import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
 /**
- * @author: young1Lin
+ * @author young1Lin
  * @github www.github.com/young1lin
  */
 @Slf4j
@@ -21,6 +19,8 @@ public class ApiFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+        ServletContext  sx = filterConfig.getServletContext();
+
         /*String contextName = filterConfig.getServletContext().getContextPath();
         log.info("上下文环境为：{}",contextName);
         Enumeration<String> names = filterConfig.getServletContext().getAttributeNames();

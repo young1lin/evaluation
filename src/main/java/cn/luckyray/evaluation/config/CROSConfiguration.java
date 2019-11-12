@@ -12,8 +12,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class CROSConfiguration extends WebMvcConfigurerAdapter {
     /**
      * 处理AJAX请求跨域的问题
-     * @author Levin
-     * @time 2017-07-13
      */
     static final String ORIGINS[] = new String[] { "GET", "POST", "PUT", "DELETE" };
 
