@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,20 +26,18 @@ import javax.sql.DataSource;
 public class DataSourceConfig {
 
     @Bean("mainDatasource")
-    @ConfigurationProperties(prefix = "spring.datasource")
-    @Primary
-    @Lazy
+    @ConfigurationProperties(prefix = "spring.datasource.hikari")
     public DataSource dataSource() {
         return new HikariDataSource();
     }
 
     @Bean("mainDataSourceTransactionManager")
-    public DataSourceTransactionManager dataSourceTransactionManager(@Qualifier("mainDatasource") DataSource dataSource) {
+    public DataSourceTransactionManager dataSourceTransactionManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
     @Bean("mainSqlSessionFactory")
-    public SqlSessionFactory sqlSessionFactory(@Qualifier("mainDatasource") DataSource dataSource) throws Exception {
+    public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
         bean.setTypeAliasesPackage("cn.luckyray.evaluation.entity");
@@ -47,7 +46,7 @@ public class DataSourceConfig {
     }
 
     @Bean("mainSqlSessionTemplate")
-    public SqlSessionTemplate sqlSessionTemplate(@Qualifier("mainSqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
+    public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 }

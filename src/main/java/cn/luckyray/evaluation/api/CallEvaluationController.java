@@ -3,17 +3,22 @@ package cn.luckyray.evaluation.api;
 import cn.luckyray.evaluation.constant.ResultCode;
 import cn.luckyray.evaluation.entity.ApiReturnObject;
 import cn.luckyray.evaluation.exception.RuleException;
+import cn.luckyray.evaluation.holder.AbstractServletContextHolder;
+import cn.luckyray.evaluation.service.UserService;
 import cn.luckyray.evaluation.util.ApiReturnUtil;
 import cn.luckyray.evaluation.vo.CallEvaluationVO;
 import cn.luckyray.evaluation.websocket.EvaluationServer;
 import com.alibaba.fastjson.JSON;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -30,6 +35,9 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequestMapping("/api")
 @Slf4j
 public class CallEvaluationController {
+
+    @Autowired
+    private UserService userService;
 
     /**
      * 开始评价接口
@@ -61,6 +69,23 @@ public class CallEvaluationController {
             }
             return ApiReturnUtil.failure(ResultCode.NOT_EXIST_WINDOW_NUM);
         }
+        return ApiReturnUtil.success();
+    }
+
+    @GetMapping("/end")
+    public ApiReturnObject end(){
+        HttpServletRequest request = AbstractServletContextHolder.getRequest();
+        Map<String,String[]> paramMap = request.getParameterMap();
+        paramMap.forEach((k,v)->{
+            StringBuilder sb = new StringBuilder(k);
+            if(v.length==1){
+                sb.append(v[0]);
+            }else{
+                sb.append(Arrays.toString(v));
+            }
+            System.out.println(sb.toString());
+        });
+        userService.userIsExist(2);
         return ApiReturnUtil.success();
     }
 }

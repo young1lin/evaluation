@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * @date 2019/9/29 13:16
  */
 @Configuration
-public class CROSConfiguration extends WebMvcConfigurerAdapter {
+public class CORSConfiguration extends WebMvcConfigurerAdapter {
     /**
      * 处理AJAX请求跨域的问题
      */

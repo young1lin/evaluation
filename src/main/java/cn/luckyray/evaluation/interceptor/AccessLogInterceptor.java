@@ -2,7 +2,6 @@ package cn.luckyray.evaluation.interceptor;
 
 import cn.luckyray.evaluation.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -17,10 +16,9 @@ import java.util.Map;
 
 /**
  * @author young1Lin
- * @GitHub www.github.com/young1lin
  */
 @Slf4j
-public class LogInterceptor implements HandlerInterceptor {
+public class AccessLogInterceptor implements HandlerInterceptor {
 
     private ThreadLocal<Long> startTimeThreadLocal = new NamedThreadLocal<>("ThreadLocal StartTime");
 
@@ -30,18 +28,6 @@ public class LogInterceptor implements HandlerInterceptor {
         if(handler instanceof HandlerMethod){
             String date = DateUtil.getCurrentDateTime();
             HandlerMethod method = (HandlerMethod)handler;
-            /*StringBuilder  sb = new StringBuilder(1000);
-            sb.append("<===========================")
-                    .append(date)
-                    .append("=============================>")
-                    .append("\nController:")
-                    .append(method.getBean().getClass().getName())
-                    .append("\nMethod    : ")
-                    .append(method.getMethod().getName())
-                    .append("\nParams    : ")
-                    .append(getParamString(request.getParameterMap()))
-                    .append("\nURI       : ")
-                    .append(request.getRequestURI());*/
             log.info("<====================="+date+"=====================>");
             log.info("Controller: "+method.getBean().getClass().getName());
             log.info("Method    : "+method.getMethod().getName());

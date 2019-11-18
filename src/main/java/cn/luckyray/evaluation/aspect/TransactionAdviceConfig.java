@@ -1,4 +1,4 @@
-package cn.luckyray.evaluation.config;
+package cn.luckyray.evaluation.aspect;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.aop.Advisor;
@@ -35,9 +35,12 @@ public class TransactionAdviceConfig {
     @Bean
     public TransactionInterceptor txAdvice() {
         DefaultTransactionAttribute txAttr_REQUIRED = new DefaultTransactionAttribute();
+        //设置事务传播常量,当前常量含义为：如果当前存在事务，则加入该事务；如果当前没有事务，则创建一个新的事务。
         txAttr_REQUIRED.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+        //不设置事务隔离级别，采用数据库默认隔离级别
         DefaultTransactionAttribute readOnlyAttr = new DefaultTransactionAttribute();
         readOnlyAttr.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+        //设置只读属性为true
         readOnlyAttr.setReadOnly(true);
         NameMatchTransactionAttributeSource source = new NameMatchTransactionAttributeSource();
         source.addTransactionalMethod("add*", txAttr_REQUIRED);

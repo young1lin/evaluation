@@ -1,8 +1,7 @@
-package cn.luckyray.evaluation.mapper;
+package cn.luckyray.evaluation.dao.main;
 
 import cn.luckyray.evaluation.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 /**

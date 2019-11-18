@@ -1,11 +1,8 @@
 package cn.luckyray.evaluation.interceptor;
 
-import cn.luckyray.evaluation.annotation.LogAnnotation;
 import cn.luckyray.evaluation.service.AccessRecordService;
-import cn.luckyray.evaluation.util.IPUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,10 +22,9 @@ public class AccessInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        String accessIp = request.getRemoteAddr();
-        String remoteHost = request.getRemoteHost();
-        System.out.println(remoteHost);
-        log.info("访问地址为[{}]",accessIp);
+        //String accessIp = request.getRemoteAddr();
+        //String remoteHost = request.getRemoteHost();
+        //log.info("访问地址为[{}]",accessIp);
         return true;
     }
 

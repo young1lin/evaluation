@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
  * @author young1Lin
  */
 @Configuration
-@MapperScan(basePackages = "cn.luckyray.evaluation.mapper" ,sqlSessionTemplateRef = "mainSqlSessionTemplate")
+@MapperScan(basePackages = "cn.luckyray.evaluation.dao.main" ,sqlSessionTemplateRef = "mainSqlSessionTemplate")
 public class MybatisConfig{
 
 }

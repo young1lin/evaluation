@@ -1,4 +1,4 @@
-package cn.luckyray.evaluation.mapper;
+package cn.luckyray.evaluation.dao.main;
 
 import cn.luckyray.evaluation.entity.AccessRecord;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;

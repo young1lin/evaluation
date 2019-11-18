@@ -1,6 +1,6 @@
 package cn.luckyray.evaluation.service.impl;
 
-import cn.luckyray.evaluation.mapper.UserMapper;
+import cn.luckyray.evaluation.dao.main.UserMapper;
 import cn.luckyray.evaluation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

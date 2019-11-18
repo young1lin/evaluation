@@ -1,5 +1,7 @@
 package cn.luckyray.evaluation.config;
 
+import cn.luckyray.evaluation.filter.ApiFilter;
+import cn.luckyray.evaluation.filter.InitServletHolder;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
@@ -7,6 +9,8 @@ import com.jfinal.template.ext.spring.JFinalViewResolver;
 import com.jfinal.template.source.ClassPathSourceFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -14,6 +18,7 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.*;
 
 /**
  * TODO
@@ -80,5 +85,24 @@ public class GlobalWebConfig {
         //3. 在converter中添加配置信息
         fasHttpMessageConverter.setFastJsonConfig(fastJsonConfig);
         return new HttpMessageConverters(fasHttpMessageConverter);
+    }
+
+    @Bean
+    public FilterRegistrationBean apiFilter(){
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        filterRegistrationBean.setFilter(new ApiFilter());
+        filterRegistrationBean.setOrder(2);
+        filterRegistrationBean.setUrlPatterns(Arrays.asList("/api/*"));
+        return filterRegistrationBean;
+    }
+
+    @Bean
+
+    public FilterRegistrationBean initFilter(){
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        filterRegistrationBean.setFilter(new InitServletHolder());
+        filterRegistrationBean.setOrder(1);
+        filterRegistrationBean.setUrlPatterns(Arrays.asList("/*"));
+        return filterRegistrationBean;
     }
 }

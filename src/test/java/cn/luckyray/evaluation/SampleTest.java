@@ -1,7 +1,7 @@
 package cn.luckyray.evaluation;
 
+import cn.luckyray.evaluation.dao.main.AccessRecordMapper;
 import cn.luckyray.evaluation.entity.AccessRecord;
-import cn.luckyray.evaluation.mapper.AccessRecordMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

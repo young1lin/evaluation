@@ -1,13 +1,12 @@
 package cn.luckyray.evaluation.service.impl;
 
+import cn.luckyray.evaluation.dao.main.AccessRecordMapper;
 import cn.luckyray.evaluation.entity.AccessRecord;
-import cn.luckyray.evaluation.mapper.AccessRecordMapper;
 import cn.luckyray.evaluation.service.AccessRecordService;
 import cn.luckyray.evaluation.util.DateUtil;
 import cn.luckyray.evaluation.util.IPUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 
 /**

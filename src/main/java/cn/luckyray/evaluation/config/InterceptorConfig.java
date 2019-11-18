@@ -1,7 +1,7 @@
 package cn.luckyray.evaluation.config;
 
 import cn.luckyray.evaluation.interceptor.AccessInterceptor;
-import cn.luckyray.evaluation.interceptor.LogInterceptor;
+import cn.luckyray.evaluation.interceptor.AccessLogInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -28,10 +28,10 @@ public class InterceptorConfig implements WebMvcConfigurer {
         List<String> excludePathPatterns = new ArrayList<>(2);
         excludePathPatterns.add("/js/*.js");
         excludePathPatterns.add("/css/*.css");
-        registry.addInterceptor(new LogInterceptor())
+        registry.addInterceptor(new AccessLogInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns(excludePathPatterns)
-                .order(1);
+                .order(-1);
         registry.addInterceptor(accessInterceptor())
                 .addPathPatterns("/api/*")
                 .excludePathPatterns(excludePathPatterns)

@@ -12,10 +12,7 @@ import java.io.IOException;
  * @github www.github.com/young1lin
  */
 @Slf4j
-@WebFilter(urlPatterns = "/api/*",filterName = "apiFilter")
-@Order(0)
 public class ApiFilter implements Filter {
-
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
