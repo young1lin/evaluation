@@ -46,9 +46,9 @@
             </encoder>
         </appender>
         <!-- 开发环境打开sql显示 -->
-        <logger name="cn.luckyray.evaluation.dao.main" level="info"/>
+        <logger name="cn.luckyray.evaluation.api.main" level="info"/>
         <logger name="org.springframework.jdbc.core.JdbcTemplate" level="debug"/>
-        <logger name="cn.luckyray.evaluation.aspect.PerformanceAspect" level="debug">
+        <logger name="me.young1lin.evaluation.api.aspect.PerformanceAspect" level="debug">
             <appender-ref ref="ROLLING" />
         </logger>
         <root level="info">
@@ -90,7 +90,7 @@
         <appender name="ROLLING"
                   class="ch.qos.logback.core.rolling.RollingFileAppender">
             <!-- 文件路径 -->
-            <file>kmapplet.log</file>
+            <file>evaluation.log</file>
             <rollingPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
                 <!-- rollover daily -->

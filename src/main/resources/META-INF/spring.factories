@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+me.young1lin.evaluation.common.config.SpringBeanUtilAutoConfiguration,\
+me.young1lin.evaluation.pages.config.ControllerAutoConfiguration,\
+me.young1lin.evaluation.websocket.config.WebSocketAutoConfiguration

@@ -12,13 +12,14 @@ server:
   error:
     path: /error
     include-exception: false
-    include-stacktrace: never
+    include-stacktrace: ALWAYS
     whitelabel:
       enabled: true
   servlet:
     session:
       timeout: 60m
     application-display-name: evaluation
+    #context-path: /eva
 
 spring:
   http:
@@ -27,25 +28,26 @@ spring:
       enabled: true
       force: true
   datasource:
-    url: jdbc:mysql://192.168.1.6:3306/yczhbsdt?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
-    username: root
-    password: root
-    sql-script-encoding: UTF-8
-
-#showSql
-logging:
-  level:
-    cn:
-      luckyray:
-        evaluation:
-          mapper : info
+    #url: jdbc:mysql://localhost:3306/evaluation_db?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    #username: root
+    #password: root
+    #sql-script-encoding: UTF-8
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 1
+      connection-test-query: select 1 from dual
+      connection-timeout: 10000
+      pool-name: main_mysql_datasource
+      jdbc-url: jdbc:mysql://localhost:3306/evaluation_db?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+      username: root
+      password: 123456
 
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
-  mapper-locations:  classpath:/mapping/*.xml
-  type-aliases-package: cn.luckyray.evaluation.entity
+  mapper-locations:  classpath:/mapping/**/*.xml
 
-  #关闭swagger2
+#开启swagger2
 swagger2:
-  enable: false
+  enable: true

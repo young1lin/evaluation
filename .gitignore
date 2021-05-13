@@ -24,6 +24,3 @@ target/
 
 ### log File ###
 *.log
-
-### test ###
-src/test/**
