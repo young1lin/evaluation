@@ -36,7 +36,7 @@ public class MyBatisConfig {
     public SqlSessionFactory sqlSessionFactory(@Qualifier("mainDatasource") HikariDataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
-        bean.setTypeAliasesPackage("cn.luckyray.evaluation.entity");
+        bean.setTypeAliasesPackage("me.young1lin.evaluation.domain");
         bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapping/**/*.xml"));
         return bean.getObject();
     }

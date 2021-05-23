@@ -67,13 +67,6 @@
 			<version>3.1.2</version>
 		</dependency>
 		<!-- mybatis plus end -->
-		<!-- mysql connector begin -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<!-- mysql connector end -->
 		<!-- aop start-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -101,9 +94,27 @@
             <version>5.2.1.RELEASE</version>
         </dependency>
         <!-- spring-boot-devtools热启动依赖包 end-->
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
+		<finalName>evaluation</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>

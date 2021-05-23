@@ -35,4 +35,30 @@ index controller 相关页面类
 3.  sudo vi /etc/hosts
 4.  将每个localhost后面加上获得的hostname即可(<font color='red'>中间是tab键隔开，不是空格</font>)。
 
+# Docker 部署（推荐）
+二选一
 
+不上传至自己的仓库的
+```shell script
+docker build -t young1lin/evaluation .
+
+docker run -d --name evaluation -p 8888:8888 young1lin/evaluation
+```
+上传至自己仓库的
+```shell script
+docker build -t young1lin/evaluation .
+
+docker tag evaluation young1lin/evaluation:1.0.1.RELEASE
+
+docker push young1lin/evaluation:1.0.1:RELEASE
+
+docker run -d --name evaluation -p 8888:8888 young1lin/evaluation
+# 或者，自定义端口，然后指定这个端口
+docker run -e "server.port=8080" -d --name evaluation-1 -p 8080:8080 young1lin/evaluation
+```
+
+# Kubernetes 部署
+我本地没成功，没弄好 Kubernetes 不推荐使用
+```shell script
+kubectl apply -f src/deployment/kubernetes/evaluation.yml
+```

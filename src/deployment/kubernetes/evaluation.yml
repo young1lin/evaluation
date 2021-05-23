@@ -1,0 +1,44 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+  metadata:
+    name: evaluation-1
+  spec:
+    # Pod 副本的数量
+    replicas: 2
+      template:
+        metadata:
+          labels:
+            app: evaluation-1
+        spec:
+          containers:
+            - name: evaluation-1
+              image: young1lin/evaluation:latest
+              imagePullPolicy: Always
+              ports:
+                - containerPort: 8080
+                  nanme: httpport
+                env:
+                  - name: JAVA_OPTS
+                    value: "-Dsun.net.inetaddr.ttl=30"
+                  - name: SERVER_PROT
+                    value: 8080
+                  - name: SPRING_DATASOURCE_URL
+                    value: jdbc:h2:mem:testdb
+                  - name: SPRING_DATASOURCE_USERNAME
+                    value: sa
+                  - name: SPRING_DATASOURCE_PASSWORD
+                    value: password
+                  - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+                    value: org.h2.Driver
+                livenessProbe:
+                  httpGet:
+                    path: /actuator/health
+                    port: 8080
+                  initialDelySeconds: 60
+                  periodSeconds: 20
+                readinessProbe:
+                  httpGet:
+                    path: /actuator/health
+                    port: 8080
+                  initialDelaySeconds: 60
+                  periodSeconds: 20

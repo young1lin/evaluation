@@ -37,4 +37,5 @@ public class CallEvaluationVO implements Serializable {
     @NotBlank(message = "流水号不能为空")
     @Size(max = 22,min = 8,message = "流水号长度应为8-22")
     private String serialNum;
+    
 }

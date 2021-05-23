@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 /**
- * @author
  * 评价器控制接口
+ *
+ * @author 261224
  */
 @RestController
 @RequestMapping("/padApi")
@@ -23,6 +24,7 @@ public class PadEvaluationController {
 
 	/**
 	 * 向OCX发送指令，并且解决跨域问题，加上produces
+	 *
 	 * @param active 互动类型
 	 * @param param 互动参数
 	 * @return 成功
