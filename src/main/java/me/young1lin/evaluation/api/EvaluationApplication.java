@@ -11,15 +11,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.context.annotation.ConfigurationClassPostProcessor;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
-import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 import org.springframework.util.StopWatch;
-
-import java.util.function.UnaryOperator;
 
 /**
  * 不需要自动装配数据源，事务管理，JdbcTemplate
@@ -31,9 +30,8 @@ import java.util.function.UnaryOperator;
 @EnableAspectJAutoProxy(exposeProxy = true, proxyTargetClass = true)
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class,
 		DataSourceTransactionManagerAutoConfiguration.class})
+//@Import({MyBeanDefinitionBeanPostProcessor.class})
 public class EvaluationApplication {
-
-	private static UnaryOperator<Object> list = (t) -> t;
 
 	public static void main(String[] args) {
 		SpringApplication.run(new Class[] {EvaluationApplication.class}, args);
@@ -41,8 +39,10 @@ public class EvaluationApplication {
 
 }
 
-@Component
-@Import({MyBeanDefinitionBeanPostProcessor.class})
+/**
+ * 注意，内部类的注解是获取不到的，只能获取 public class 的注解。当然这里加 Component 能扫描到，感觉这是 Spring 的一个缺陷吧。
+ * {@link ConfigurationClassPostProcessor} 这个类的缺陷。
+ */
 class MyBeanDefinitionBeanPostProcessor implements BeanDefinitionRegistryPostProcessor, ImportBeanDefinitionRegistrar {
 
 	private final StopWatch watch = new StopWatch();
@@ -62,6 +62,13 @@ class MyBeanDefinitionBeanPostProcessor implements BeanDefinitionRegistryPostPro
 
 	@Override
 	public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
+		MultiValueMap<String, Object> map = importingClassMetadata.getAllAnnotationAttributes(Component.class.getName());
+		if (map != null) {
+			map.forEach((k, v) -> System.out.println(k + ":" + v));
+		}
+		else {
+			System.out.println("找不到 Component 注解");
+		}
 	}
 
 }

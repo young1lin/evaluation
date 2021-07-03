@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+
 import java.io.IOException;
 
 /**
@@ -15,9 +16,9 @@ import java.io.IOException;
 @WebFilter(urlPatterns = "/api/*")
 public class ApiFilter implements Filter {
 
-    @Override
-    public void init(FilterConfig filterConfig) {
-        ServletContext sx = filterConfig.getServletContext();
+	@Override
+	public void init(FilterConfig filterConfig) {
+		ServletContext sx = filterConfig.getServletContext();
 
         /*String contextName = filterConfig.getServletContext().getContextPath();
         log.info("上下文环境为：{}",contextName);
@@ -28,19 +29,19 @@ public class ApiFilter implements Filter {
             Object o  = filterConfig.getServletContext().getAttribute(name);
             System.out.println(o);
         }*/
-    }
+	}
 
-    @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        long startTime = System.currentTimeMillis();
-        filterChain.doFilter(servletRequest, servletResponse);
-        long endTime = System.currentTimeMillis();
-        log.info("--------------costTime : [{}] ms", endTime - startTime);
-    }
+	@Override
+	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+		long startTime = System.currentTimeMillis();
+		filterChain.doFilter(servletRequest, servletResponse);
+		long endTime = System.currentTimeMillis();
+		log.info("--------------costTime : [{}] ms", endTime - startTime);
+	}
 
-    @Override
-    public void destroy() {
-        log.info("APIFilter destroyed");
-    }
+	@Override
+	public void destroy() {
+		log.info("APIFilter destroyed");
+	}
 
 }

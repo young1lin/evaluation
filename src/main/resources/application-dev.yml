@@ -54,6 +54,7 @@ mybatis-plus:
     map-underscore-to-camel-case: true
   mapper-locations:  classpath:/mapping/*/*.xml
   type-aliases-package: cn.luckyray.evaluation.entity
-#开启swagger2
+
+# 是否开启swagger2
 swagger2:
   enable: true

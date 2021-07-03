@@ -1,6 +1,8 @@
 # 准备工作
 
-更改对应 MySQL 密码，导入 db.sql 的内容
+更改对应 MySQL 密码，导入 db.sql 的内容。
+
+Dev profile 用的 H2 为了启动不报错，Prod 用的 MySQL，配置对应的 MySQL 配置即可。
 
 
 # 访问地址
@@ -39,6 +41,7 @@ index controller 相关页面类
 二选一
 
 不上传至自己的仓库的
+
 ```shell script
 docker build -t young1lin/evaluation .
 

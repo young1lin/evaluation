@@ -1,11 +1,14 @@
 package me.young1lin.evaluation.api.holder;
 
 import org.springframework.core.NamedThreadLocal;
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +25,7 @@ import me.young1lin.evaluation.api.filter.InitServletHolder;
  * @date 2019/11/12 10:46 下午
  * @see InitServletHolder#doFilter
  */
+@Deprecated
 public abstract class AbstractServletContextHolder implements Serializable {
 
 	private static final String REQUEST_KEY = "request";
@@ -36,6 +40,8 @@ public abstract class AbstractServletContextHolder implements Serializable {
 
 
 	public static void init(HttpServletRequest request, HttpServletResponse response) {
+		ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+		String requestParam = requestAttributes.getRequest().getParameter("这里是你的请求参数名称");
 		CONTEXT_HOLDER_MAP.remove();
 		Map<String, Object> contextMap = new HashMap<>(3);
 		contextMap.put(SESSION_KEY, request.getSession());

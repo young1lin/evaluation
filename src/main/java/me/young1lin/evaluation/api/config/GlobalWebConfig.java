@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.Filter;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.*;
@@ -42,7 +43,6 @@ public class GlobalWebConfig {
 	public JFinalViewResolver jfinalviewresolver() throws UnknownHostException {
 		//获取本地ip，和端口，并将信息拼接设置成context
 		String ip = InetAddress.getLocalHost().getHostAddress();
-		String localIp = ip + ":" + port;
 		JFinalViewResolver jfr = new JFinalViewResolver();
 		// setDevMode 配置放在最前面
 		jfr.setDevMode(true);

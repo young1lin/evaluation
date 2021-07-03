@@ -15,6 +15,6 @@ import me.young1lin.evaluation.api.domain.BaseEntity;
 @Data
 public class AccessRecord extends BaseEntity {
 
-    private Long accessIpAddress;
+	private Long accessIpAddress;
 
 }

@@ -29,20 +29,20 @@ public class GlobalExceptionHandler {
 	 * 表单验证时异常返回信息
 	 *
 	 * @param bindException 绑定异常
-	 * @return ApiReturnObject
+	 * @return ResponseEntity
 	 * @author 杨逸林
 	 * @date 2019-07-29 22:27
 	 */
 	@ExceptionHandler(BindException.class)
-	public ApiReturnObject defaultExceptionHandler(BindException bindException) {
+	public ResponseEntity<?> defaultExceptionHandler(BindException bindException) {
 		//处理返回的错误信息
 		List<ObjectError> errors = bindException.getBindingResult().getAllErrors();
 		if (!CollectionUtils.isEmpty(errors)) {
 			ObjectError objectError = errors.get(0);
 			ResultCode resultCode = ResultCode.FAILURE.setMessage(objectError.getDefaultMessage());
-			return ApiReturnUtil.failure(resultCode);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resultCode);
 		}
-		return ApiReturnUtil.failure(ResultCode.SYSTEM_EXCEPTION);
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	}
 
 	/**

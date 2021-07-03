@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
@@ -35,14 +36,17 @@ public class EvaluationServer {
 	 * static 变量被该类class对象持有，在类初始化时一起初始化。final保证对象引用不可变
 	 */
 	private static final AtomicInteger ONLINE_COUNT = new AtomicInteger(0);
+
 	/**
 	 * 与某个客户端的连接会话，需要通过它来给客户端发送数据
 	 */
 	private Session session;
+
 	/**
 	 * 使用map对象，便于根据winNum来获取对应的WebSocket,当然也可以用CopyOnWriteArrayList
 	 */
 	private static ConcurrentHashMap<String, EvaluationServer> webSocketList = new ConcurrentHashMap<>();
+
 	/**
 	 * 接收winNum
 	 */
